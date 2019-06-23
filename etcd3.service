@@ -1,0 +1,20 @@
+[Unit]
+Description=etcd service
+Documentation=https://github.com/etcd-io/etcd
+
+[Service]
+Type=notify
+User=etcd
+ExecStart=/usr/bin/etcd \\
+  --name etcd3 \\
+  --data-dir=/var/lib/etcd \\
+  --initial-advertise-peer-urls http://90.90.90.12:2380 \\
+  --listen-peer-urls http://90.90.90.12:2380 \\
+  --listen-client-urls http://90.90.90.12:2379,http://127.0.0.1:2379 \\
+  --advertise-client-urls http://90.90.90.12:2379 \\
+  --initial-cluster-token etcd-cluster-0 \\
+  --initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380 \\
+  --initial-cluster-state new \
+
+[Install]
+WantedBy=multi-user.target
